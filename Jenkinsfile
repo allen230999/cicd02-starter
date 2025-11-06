@@ -3,7 +3,7 @@ pipeline {
     environment {
         TF_VAR_gcp_project = "qwiklabs-gcp-01-c33b8bd308bb"
         TF_VAR_bucket = "tf-remote-state-student_03_37a7507f811e-26808-16252"
-        REPOSITORY = "https://github.com/allen230999cicd02-starter"
+        REPOSITORY = "https://github.com/allen230999/cicd02-starter"
         TF_VAR_pubkey_path = "${WORKSPACE}/ansible_key.pub"
     }
     stages {
@@ -58,7 +58,7 @@ pipeline {
                         sh "ansible 127.0.0.1 -m template -a 'src=${WORKSPACE}/ansible/inventory_template.yml dest=${WORKSPACE}/ansible/inventory.gcp_compute.yml' -e 'project_id=${TF_VAR_gcp_project}'" 
                         sh '''
                         export GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_CLOUD_KEYFILE_JSON
-                        ansible-playbook -i inventory.gcp_compute.yml playbook.yml -e "repository_url=${REPOSITORY}.git"
+                        ansible-playbook -i inventory.gcp_compute.yml playbook.yml -e "repository_url=${REPOSITORY}"
                         '''
                     }
                 }
